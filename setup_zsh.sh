@@ -2,7 +2,8 @@
 
 read -s -p "Enter your password: " pass
 #echo -e "\n Is your password really $pass? "
-echo $pass
+echo $pass >> /dev/null 
+
 os=$(echo $pass | sudo -S cat /etc/os-release | grep 'ID=' | head -n 1 | cut -d '=' -f2)
 if [[ $os == 'ubuntu' ]] ; then
 	if [ -f "/usr/bin/git*" ] ; then
@@ -12,21 +13,21 @@ if [[ $os == 'ubuntu' ]] ; then
 	fi
 elif [[ $os == 'linuxmint' ]] ; then
 	if [ -f "/usr/bin/git*" ] ; then
-		echo '<===GIT INSTALL===>'
+		echo '<===GIT and ZSH INSTALL===>'
+	else
+		echo $pass | sudo -S apt update && echo $pass | sudo -S apt install fonts-powerline git zsh -y
+	fi
+elif [[ $os == 'kali' ]] ; then
+	if [ -f "/usr/bin/git*" ] ; then
+		echo '<===GIT and ZSH INSTALL===>'
 	else
 		echo $pass | sudo -S apt update && echo $pass | sudo -S apt install fonts-powerline git zsh -y
 	fi
 elif [[ $os == 'fedora' ]] ; then
 	if [ -f "/usr/bin/git*" ] ; then
-		echo '<===GIT INSTALL===>'
+		echo '<===GIT and ZSH INSTALL===>'
 	else
-		echo $pass | sudo -S dnf update -n && echo $pass | sudo -S dnf install git zsh -y
-	fi
-elif [[ $os == 'kali' ]]; then
-	if [ -f "/usr/bin/git*" ] ; then
-		echo '<===GIT INSTALL===>'
-	else
-		echo $pass | sudo -S apt update && echo $pass | sudo -S apt install fonts-powerline git zsh -y
+		echo $pass | sudo -S dnf update -n && echo $pass | sudo -S dnf install git zsh -y 
 	fi
 fi
 #read -s -p "Enter your password: "
@@ -49,35 +50,14 @@ else
 	fi
 fi
 
-echo '<==== install zsh-syntax-highlighting and  ====>'
+echo '<==== install zsh-syntax-highlighting and zsh-autosuggestions ====>'
 echo $pass | sudo -S git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 echo $pass | sudo -S git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 sed -i '/ZSH_THEME/s/robbyrussell/agnoster/' ~/.zshrc
 sed -i '/plugins/s/git/git\ docker\ docker-compose\ zsh-syntax-highlighting\ zsh-autosuggestions/' ~/.zshrc
-zsh
-echo $pass | sudo -S chsh -s $(which zsh)
+echo $pass | sudo -S chsh -s $(which zsh) $USER
 source ~/.zshrc
+zsh
 
-
-
-
-
-#!/usr/bin/expect --
-
-#set pass "yourpass"
-
-#proc setpass { pass } {
-#    spawn your_mega_cli_cmd # Ваша программа с параметрами тут
-#    expect_after {
-#        timeout { catch { close }; wait; return 1 }
-#        eof { catch { close }; wait; return 1 }
-#    }
-#    expect {
-#        ".*assword.*" {send  "$pass\r"; exp_continue}
-#    }
-#    expect eof
-#}
-
-#setpass $pass
