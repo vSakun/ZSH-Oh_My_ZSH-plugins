@@ -56,7 +56,7 @@ echo $pass | sudo -S git clone https://github.com/zsh-users/zsh-syntax-highlight
 echo $pass | sudo -S git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 sed -i '/ZSH_THEME/s/robbyrussell/agnoster/' ~/.zshrc
-sed -i '/plugins/s/git/git\ docker\ docker-compose\ zsh-syntax-highlighting\ zsh-autosuggestions/' ~/.zshrc
+sed -i '/plugins/s/git/git\ docker\ docker-compose\ kubectl\ zsh-syntax-highlighting\ zsh-autosuggestions/' ~/.zshrc
 echo $pass | sudo -S chsh -s $(which zsh) $USER
 source ~/.zshrc
 zsh
