@@ -1,5 +1,6 @@
 # ZSH-Oh_My_ZSH-plugins
-plugins: 
+plugins:
+
 1.zsh-syntax-highlighting
 2.zsh-autosuggestions
 3.docker
