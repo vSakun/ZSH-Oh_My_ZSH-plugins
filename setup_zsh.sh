@@ -29,6 +29,12 @@ elif [[ $os == 'fedora' ]] ; then
 	else
 		echo $pass | sudo -S dnf update -n && echo $pass | sudo -S dnf install git zsh -y 
 	fi
+elif [[ $os == 'manjaro' ]] ; then
+	if [ -f "/usr/bin/git*" ] ; then
+		echo '<===GIT and ZSH INSTALL===>'
+	else
+		echo $pass | sudo -S pacman -S git zsh -y 
+	fi
 fi
 #read -s -p "Enter your password: "
 #echo -e "\n Is your password really $pass? "
